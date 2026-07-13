@@ -50,22 +50,3 @@ db/migration/ — Flyway SQL-миграции
 | GET   | `/api/v1/movies/for-friends` | JWT          | подборка на основе оценок друзей   |
 | GET   | `/api/v1/movies/{id}`        | публичный    | карточка фильма                    |
 
-## Деплой (бесплатно)
-
-1. **База данных** — создай проект на [neon.tech](https://neon.tech) или
-   [supabase.com](https://supabase.com), скопируй connection string в `DATABASE_URL`.
-2. **Backend** — на [render.com](https://render.com):
-   - New → Web Service → подключи GitHub-репозиторий (в нём есть `Dockerfile`, Render
-     подхватит его автоматически).
-   - Задай переменные окружения из `.env.example` в Render → Environment.
-   - Free-инстанс засыпает после 15 мин простоя — первый запрос после сна грузится
-     ~1 минуту, это нормально для пет-проекта.
-3. После деплоя Flyway сам применит миграции при первом старте контейнера.
-
-## TODO / дальнейшие шаги
-
-- [ ] Интеграция с TMDB API (клиент + синхронизация Movie/Genre)
-- [ ] Эндпоинты для избранного/оценок (`/api/v1/users/me/movies`)
-- [ ] Эндпоинты для друзей (`/api/v1/friends`)
-- [ ] Refresh-token эндпоинт
-- [ ] Тесты (unit + integration с H2/Testcontainers)
