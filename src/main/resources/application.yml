@@ -36,6 +36,13 @@ app:
     base-url: https://api.themoviedb.org/3
     api-key: ${TMDB_API_KEY}
     image-base-url: ${APP_TMDB_IMAGE_BASE_URL}
+  avatar:
+    default: /avatars/avatar-1.svg
+    upload-dir: ${APP_AVATAR_UPLOAD_DIR:./uploads/user-avatars}
+
+spring.servlet.multipart:
+  max-file-size: 5MB
+  max-request-size: 5MB
 
 springdoc:
   swagger-ui:

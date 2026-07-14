@@ -1,5 +1,6 @@
 package com.mytopmovies.service;
 
+import com.mytopmovies.config.AvatarProperties;
 import com.mytopmovies.dto.auth.AuthResponse;
 import com.mytopmovies.dto.auth.LoginRequest;
 import com.mytopmovies.dto.auth.RegisterRequest;
@@ -23,6 +24,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final AvatarProperties avatarProperties;
     private final AuthenticationManager authenticationManager;
 
     @Transactional
@@ -38,6 +40,7 @@ public class AuthService {
                 .email(request.email())
                 .username(request.username())
                 .passwordHash(passwordEncoder.encode(request.password()))
+                .avatarUrl(avatarProperties.getDefaultAvatar())
                 .build();
 
         user = userRepository.save(user);
@@ -66,6 +69,6 @@ public class AuthService {
         String accessToken = jwtService.generateAccessToken(userDetails);
         String refreshToken = jwtService.generateRefreshToken(userDetails);
 
-        return new AuthResponse(user.getId(), user.getUsername(), user.getEmail(), accessToken, refreshToken);
+        return new AuthResponse(user.getId(), user.getUsername(), user.getEmail(), user.getAvatarUrl(), accessToken, refreshToken);
     }
 }

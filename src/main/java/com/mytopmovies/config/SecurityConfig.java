@@ -35,6 +35,8 @@ public class SecurityConfig {
 
     private static final String[] PUBLIC_ENDPOINTS = {
             "/api/v1/auth/**",
+            "/avatars/**",
+            "/user-avatars/**",
             "/docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
@@ -51,6 +53,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
+                        // allow anyone to read available avatar options; other avatar actions require auth
+                        .requestMatchers("GET", "/api/v1/avatars").permitAll()
                         // browsing categories/genres is open; personal actions require auth
                         .requestMatchers("GET", "/api/v1/movies/**", "/api/v1/genres/**").permitAll()
                         .anyRequest().authenticated()
