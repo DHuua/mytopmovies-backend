@@ -46,4 +46,9 @@ public class AvatarController {
     public AvatarResponse deleteCurrentAvatar(Authentication authentication) {
         return avatarService.deleteCurrentAvatar(authentication.getName());
     }
+
+    @GetMapping("/current")
+    public AvatarResponse getCurrentAvatar(Authentication authentication) {
+        return avatarService.getCurrentAvatar(authentication.getName());
+    }
 }

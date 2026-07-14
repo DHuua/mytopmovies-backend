@@ -34,7 +34,6 @@ public class AvatarService {
             "image/png",
             "image/jpeg",
             "image/jpg",
-            "image/gif",
             "image/webp"
     );
 
@@ -101,6 +100,12 @@ public class AvatarService {
         return new AvatarResponse(updated.getAvatarUrl());
     }
 
+    @Transactional(readOnly = true)
+    public AvatarResponse getCurrentAvatar(String userEmail) {
+        User user = findUserByEmail(userEmail);
+        return new AvatarResponse(user.getAvatarUrl());
+    }
+
     private List<String> loadPredefinedAvatarUrls() {
         try {
             Resource[] resources = resourcePatternResolver.getResources(PREDEFINED_AVATAR_LOCATION);
@@ -162,7 +167,6 @@ public class AvatarService {
         return switch (contentType.toLowerCase()) {
             case "image/png" -> ".png";
             case "image/jpeg", "image/jpg" -> ".jpg";
-            case "image/gif" -> ".gif";
             case "image/webp" -> ".webp";
             default -> throw new ApiException("Unsupported avatar file type", HttpStatus.BAD_REQUEST);
         };
